@@ -6,6 +6,7 @@ import ChatMessage, { Message } from './ChatMessage';
 import ChatInput from './ChatInput';
 import ApiKeyInput from './ApiKeyInput';
 import LoadingMessage from './LoadingMessage';
+import ImageGenerator from './ImageGenerator';
 import { Button } from "@/components/ui/button";
 import { Trash2Icon } from 'lucide-react';
 
@@ -103,6 +104,74 @@ const ChatContainer: React.FC = () => {
     }
   };
 
+  const handleGenerateImage = async (prompt: string) => {
+    if (!apiKey) {
+      toast.error('Please set your OpenAI API key first');
+      return;
+    }
+
+    const userMessage: Message = {
+      id: uuidv4(),
+      role: 'user',
+      content: `Generate image: ${prompt}`,
+      timestamp: new Date(),
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('https://api.openai.com/v1/images/generations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'dall-e-3',
+          prompt,
+          n: 1,
+          size: '1024x1024',
+          quality: 'standard',
+          response_format: 'url',
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData?.error?.message || `Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      const assistantMessage: Message = {
+        id: uuidv4(),
+        role: 'assistant',
+        content: 'Here is the image generated based on your prompt:',
+        imageUrl: data.data[0].url,
+        timestamp: new Date(),
+      };
+
+      setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Error calling DALL-E API:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to generate image');
+      
+      // Add a friendly error message
+      setMessages(prev => [
+        ...prev, 
+        {
+          id: uuidv4(),
+          role: 'assistant',
+          content: `I'm sorry, there was an error generating the image. ${error instanceof Error ? error.message : 'Please try again later.'}`,
+          timestamp: new Date(),
+        }
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const clearConversation = () => {
     setMessages([]);
     toast.info('Conversation cleared');
@@ -115,11 +184,18 @@ const ChatContainer: React.FC = () => {
       <header className="text-center mb-6 animate-fade-in">
         <h1 className="text-2xl font-bold mb-2">AI Assistant</h1>
         <p className="text-muted-foreground">
-          Ask me anything and I'll do my best to help
+          Ask me anything or generate images with DALL-E
         </p>
       </header>
 
       <ApiKeyInput onApiKeyChange={handleApiKeyChange} />
+
+      {apiKey && (
+        <ImageGenerator 
+          onGenerateImage={handleGenerateImage} 
+          disabled={isLoading}
+        />
+      )}
 
       {hasMessages && (
         <div className="flex justify-end mb-4 animate-fade-in">
@@ -139,7 +215,7 @@ const ChatContainer: React.FC = () => {
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <div className="text-center text-muted-foreground animate-fade-in">
-              <p>No messages yet. Start a conversation!</p>
+              <p>No messages yet. Start a conversation or generate an image!</p>
             </div>
           </div>
         ) : (

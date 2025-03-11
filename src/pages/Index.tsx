@@ -9,7 +9,7 @@ const Index: React.FC = () => {
         <ChatContainer />
       </main>
       <footer className="py-4 text-center text-sm text-muted-foreground">
-        <p>Powered by OpenAI API</p>
+        <p>Powered by OpenAI API (GPT-4 and DALL-E)</p>
       </footer>
     </div>
   );
