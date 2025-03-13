@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { Message } from '@/components/ChatMessage';
-import { ChatBubbleIcon, ImageIcon, ChevronRightIcon } from 'lucide-react';
+import { MessageCircleIcon, ImageIcon, ChevronRightIcon } from 'lucide-react';
 
 const Index: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'chat' | 'image'>('image');
@@ -101,7 +101,7 @@ const Index: React.FC = () => {
               className={`rounded-full ${activeTab === 'chat' ? 'bg-primary text-primary-foreground' : ''}`}
               onClick={() => setActiveTab('chat')}
             >
-              <ChatBubbleIcon className="h-4 w-4 mr-2" />
+              <MessageCircleIcon className="h-4 w-4 mr-2" />
               Chat Bot
             </Button>
           </div>

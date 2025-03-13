@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,7 +15,6 @@ const ChatContainer: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Load API key from localStorage on initial render
   useEffect(() => {
     const savedApiKey = localStorage.getItem('openai-api-key');
     if (savedApiKey) {
@@ -24,7 +22,6 @@ const ChatContainer: React.FC = () => {
     }
   }, []);
 
-  // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
@@ -62,7 +59,7 @@ const ChatContainer: React.FC = () => {
           'Authorization': `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: 'gpt-4o', // Using the latest model, you can change to a different one
+          model: 'gpt-4o',
           messages: [
             ...messages.map(msg => ({ role: msg.role, content: msg.content })),
             { role: 'user', content },
@@ -89,7 +86,6 @@ const ChatContainer: React.FC = () => {
       console.error('Error calling OpenAI API:', error);
       toast.error(error instanceof Error ? error.message : 'Failed to get a response');
       
-      // Add a friendly error message
       setMessages(prev => [
         ...prev, 
         {
@@ -104,10 +100,10 @@ const ChatContainer: React.FC = () => {
     }
   };
 
-  const handleGenerateImage = async (prompt: string) => {
+  const handleGenerateImage = async (prompt: string, size: string = '1024x1024'): Promise<string | undefined> => {
     if (!apiKey) {
       toast.error('Please set your OpenAI API key first');
-      return;
+      return undefined;
     }
 
     const userMessage: Message = {
@@ -131,7 +127,7 @@ const ChatContainer: React.FC = () => {
           model: 'dall-e-3',
           prompt,
           n: 1,
-          size: '1024x1024',
+          size,
           quality: 'standard',
           response_format: 'url',
         }),
@@ -143,30 +139,23 @@ const ChatContainer: React.FC = () => {
       }
 
       const data = await response.json();
+      const imageUrl = data.data[0].url;
       
       const assistantMessage: Message = {
         id: uuidv4(),
         role: 'assistant',
         content: 'Here is the image generated based on your prompt:',
-        imageUrl: data.data[0].url,
+        imageUrl,
         timestamp: new Date(),
       };
 
       setMessages(prev => [...prev, assistantMessage]);
+      
+      return imageUrl;
     } catch (error) {
       console.error('Error calling DALL-E API:', error);
       toast.error(error instanceof Error ? error.message : 'Failed to generate image');
-      
-      // Add a friendly error message
-      setMessages(prev => [
-        ...prev, 
-        {
-          id: uuidv4(),
-          role: 'assistant',
-          content: `I'm sorry, there was an error generating the image. ${error instanceof Error ? error.message : 'Please try again later.'}`,
-          timestamp: new Date(),
-        }
-      ]);
+      return undefined;
     } finally {
       setIsLoading(false);
     }
