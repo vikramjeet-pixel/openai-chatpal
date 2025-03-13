@@ -80,7 +80,7 @@ const Index: React.FC = () => {
       <header className="py-6 border-b border-border/50">
         <div className="container">
           <h1 className="text-2xl font-bold text-center">
-            AI <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">Studio</span>
+            Vikramjeet's <span className="bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">AI Studio</span>
           </h1>
         </div>
       </header>
@@ -94,7 +94,7 @@ const Index: React.FC = () => {
               onClick={() => setActiveTab('image')}
             >
               <ImageIcon className="h-4 w-4 mr-2" />
-              Image Creator
+              Vikram's Image Creator
             </Button>
             <Button 
               variant="ghost" 
@@ -102,7 +102,7 @@ const Index: React.FC = () => {
               onClick={() => setActiveTab('chat')}
             >
               <MessageCircleIcon className="h-4 w-4 mr-2" />
-              Chat Bot
+              Vikram's Chat Bot
             </Button>
           </div>
         </div>
@@ -122,7 +122,7 @@ const Index: React.FC = () => {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-medium text-lg flex items-center">
                     <ImageIcon className="h-4 w-4 mr-2 text-primary" />
-                    Recent Generations
+                    Vikramjeet's Recent Creations
                   </h3>
                   <Button 
                     variant="ghost" 
@@ -155,7 +155,7 @@ const Index: React.FC = () => {
       </main>
       
       <footer className="py-4 text-center text-sm text-muted-foreground border-t border-border/50">
-        <p>Powered by OpenAI API (GPT-4 and DALL-E)</p>
+        <p>Vikramjeet Singh's AI Studio - Powered by OpenAI API (GPT-4 and DALL-E)</p>
       </footer>
     </div>
   );
