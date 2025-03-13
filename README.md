@@ -1,69 +1,107 @@
-# Welcome to your Lovable project
 
-## Project info
+# AI Studio - Image Generator & Chat Bot
 
-**URL**: https://lovable.dev/projects/3ff7f8f8-191a-4ef6-ac8b-b9afc55c2396
+A modern web application that leverages OpenAI's powerful APIs to generate images using DALL-E 3 and have conversations using GPT-4.
 
-## How can I edit this code?
+![AI Studio Preview](public/og-image.png)
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+### Image Generation
+- Create stunning AI-generated images using DALL-E 3
+- Multiple aspect ratio options (Square, Portrait, Landscape)
+- Live image preview
+- One-click download of generated images
+- Regenerate images with the same prompt
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/3ff7f8f8-191a-4ef6-ac8b-b9afc55c2396) and start prompting.
+### Chat Bot
+- Intelligent conversations powered by GPT-4
+- Full chat history with user and assistant messages
+- Support for markdown in responses
+- Clear conversation feature
 
-Changes made via Lovable will be committed automatically to this repo.
+### Shared Features
+- Secure API key management (stored in localStorage)
+- Modern, responsive UI built with React and Tailwind CSS
+- Beautiful gradient design elements
+- Seamless tab switching between image and chat modes
 
-**Use your preferred IDE**
+## Tech Stack
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Frontend**: React, TypeScript, Vite
+- **Styling**: Tailwind CSS, shadcn/ui components
+- **AI Integration**: OpenAI API (DALL-E 3, GPT-4)
+- **State Management**: React useState
+- **UI Components**: Custom components and shadcn/ui
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Getting Started
 
-Follow these steps:
+### Prerequisites
+- Node.js (v14+)
+- npm or yarn
+- OpenAI API key ([Get one here](https://platform.openai.com/account/api-keys))
 
+### Installation
+
+1. Clone the repository
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+git clone https://github.com/yourusername/ai-studio.git
+cd ai-studio
 ```
 
-**Edit a file directly in GitHub**
+2. Install dependencies
+```sh
+npm install
+# or
+yarn
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+3. Start the development server
+```sh
+npm run dev
+# or
+yarn dev
+```
 
-**Use GitHub Codespaces**
+4. Open your browser and visit `http://localhost:8080`
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Usage
 
-## What technologies are used for this project?
+1. Enter your OpenAI API key in the provided field
+2. For image generation:
+   - Select the "Image Creator" tab
+   - Enter a detailed description of the image you want to create
+   - Select your preferred aspect ratio
+   - Click "Create Image"
+   - Download or regenerate as needed
 
-This project is built with .
+3. For chat:
+   - Select the "Chat Bot" tab
+   - Type your message and press Enter
+   - View the AI's response and continue the conversation
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Security Note
 
-## How can I deploy this project?
+This application stores your OpenAI API key in your browser's localStorage. While convenient, be cautious when using on shared devices. For production applications, consider implementing a backend service to securely handle API requests.
 
-Simply open [Lovable](https://lovable.dev/projects/3ff7f8f8-191a-4ef6-ac8b-b9afc55c2396) and click on Share -> Publish.
+## License
 
-## I want to use a custom domain - is that possible?
+[MIT](LICENSE)
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+## Acknowledgements
+
+- [OpenAI](https://openai.com/) for providing the powerful AI APIs
+- [shadcn/ui](https://ui.shadcn.com/) for the beautiful UI components
+- [Tailwind CSS](https://tailwindcss.com/) for the styling framework
+- [Vite](https://vitejs.dev/) for the fast development environment
+- [React](https://reactjs.org/) for the frontend framework
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
